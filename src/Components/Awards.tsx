@@ -1,4 +1,4 @@
-import { awards } from "../config1";
+import { awards } from "../config";
 
 export function Awards(): JSX.Element {
   if (!awards) return <></>;

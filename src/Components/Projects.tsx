@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Repo } from "../Type";
-import { user } from "../config1";
+import { user } from "../config";
 const { github } = user;
 
 function MinMode(): JSX.Element {

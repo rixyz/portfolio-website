@@ -1,4 +1,4 @@
-import { educations } from "../config1";
+import { educations } from "../config";
 
 export function Education(): JSX.Element {
   if (!educations) return <></>;

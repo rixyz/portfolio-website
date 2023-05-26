@@ -1,4 +1,4 @@
-import { experiences } from "../config1";
+import { experiences } from "../config";
 
 export function Experience(): JSX.Element {
   if (!experiences) return <></>;

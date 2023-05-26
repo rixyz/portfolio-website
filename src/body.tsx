@@ -4,7 +4,7 @@ import { Experience } from "./Components/Experience";
 import { Awards } from "./Components/Awards";
 import { ProjectList } from "./Components/Projects";
 import { OtherWork } from "./Components/OtherWork";
-import { user } from "./config1";
+import { user } from "./config";
 
 function StringToJSX({ htmlString }: { htmlString: string }): JSX.Element {
   return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;

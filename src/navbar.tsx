@@ -1,4 +1,4 @@
-import { user, socials, contact } from "./config1";
+import { user, socials, contact } from "./config";
 
 function ContactInfo(): JSX.Element | null {
   const { phone, address, email } = contact;

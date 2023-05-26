@@ -1,4 +1,4 @@
-import { otherWorks } from "../config1";
+import { otherWorks } from "../config";
 
 export function OtherWork(): JSX.Element {
   if (!otherWorks) return <></>;

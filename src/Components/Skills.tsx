@@ -1,4 +1,4 @@
-import { skills } from "../config1";
+import { skills } from "../config";
 export function Skills(): JSX.Element {
   if (!skills) return <></>;
   return (
