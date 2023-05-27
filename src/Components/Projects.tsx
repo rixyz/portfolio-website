@@ -4,60 +4,55 @@ import { user } from "../config";
 const { github } = user;
 
 function MinMode(): JSX.Element {
-  const [projects, setProjects] = useState<Repo[]>([]);
+  const [projects, setProjects] = useState<Repo[]>();
 
   useEffect(() => {
-    const cachedData = localStorage.getItem("cachedProjects");
-    if (cachedData) {
-      setProjects(JSON.parse(cachedData));
-    } else {
-      fetch(`https://api.github.com/users/${github}/repos`)
-        .then((response) => response.json())
-        .then((data) => {
-          const projectList: Repo[] = data
-            .filter((repo: Repo) => !repo.private)
-            .map((repo: Repo) => ({
-              name: repo.name,
-              description: repo.description,
-              stars: repo.stargazers_count,
-              forks: repo.forks,
-              image: `https://opengraph.githubassets.com/HASH/${repo.owner.login}/${repo.name}`,
-              html_url: repo.html_url,
-              languages_url: repo.languages_url,
-            }));
+    fetch(`https://api.github.com/users/${github}/repos`)
+      // fetch(`https://api.github.com/users/microsoft/repos`)
+      .then((response) => response.json())
+      .then((data) => {
+        const projectList: Repo[] = data
+          .filter((repo: Repo) => !repo.private)
+          .map((repo: Repo) => ({
+            name: repo.name,
+            description: repo.description,
+            stars: repo.stargazers_count,
+            forks: repo.forks,
+            image: `https://opengraph.githubassets.com/HASH/${repo.owner.login}/${repo.name}`,
+            url: repo.html_url,
+            languages_url: repo.languages_url,
+          }));
 
-          const fetchLanguages = projectList.map((project: Repo) => {
-            return fetch(project.languages_url)
-              .then((response) => response.json())
-              .then((languages) => {
-                const totalBytes = Object.values(languages || {}).reduce(
-                  (sum: number, value: unknown) => sum + (value as number),
-                  0
-                );
-                return {
-                  ...project,
-                  languages,
-                  totalBytes,
-                };
-              });
-          });
-
-          Promise.all(fetchLanguages)
-            .then((projects) => {
-              setProjects(projects);
-              localStorage.setItem("cachedProjects", JSON.stringify(projects));
-            })
-            .catch((error) => {
-              console.log("Error fetching GitHub projects:", error);
+        const fetchLanguages = projectList.map((project: Repo) => {
+          return fetch(project.languages_url)
+            .then((response) => response.json())
+            .then((languages) => {
+              const totalBytes = Object.values(languages || {}).reduce(
+                (sum: number, value: unknown) => sum + (value as number),
+                0
+              );
+              return {
+                ...project,
+                languages,
+                totalBytes,
+              };
             });
-        })
-        .catch((error) => {
-          console.log("Error fetching GitHub projects:", error);
         });
-    }
+
+        Promise.all(fetchLanguages)
+          .then((projects) => {
+            setProjects(projects);
+          })
+          .catch((error) => {
+            console.log("Error fetching GitHub projects:", error);
+          });
+      })
+      .catch((error) => {
+        console.log("Error fetching GitHub projects:", error);
+      });
   }, []);
 
-  if (projects.length === 0) {
+  if (!projects) {
     return <></>;
   }
 
