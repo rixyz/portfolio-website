@@ -23,6 +23,7 @@ export function Body(): JSX.Element {
           ].map(([title, url]) => (
             <a
               href={url}
+              key={title}
               className="text-lg p-5 hover:text-[#d6d6d6b2] duration-500"
             >
               {title}
