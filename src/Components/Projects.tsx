@@ -1,54 +1,51 @@
 import { Repo } from "../Type";
+import { useQuery } from "@tanstack/react-query";
 import { user } from "../config";
 const { github } = user;
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
+async function fetchRepoData() {
+  const response = await fetch(`https://api.github.com/users/${github}/repos`);
+  const data = await response.json();
+
+  const projectList: Repo[] = data.map((repo: Repo) => ({
+    name: repo.name,
+    description: repo.description,
+    stars: repo.stargazers_count,
+    forks: repo.forks,
+    image: `https://opengraph.githubassets.com/HASH/${repo.owner.login}/${repo.name}`,
+    html_url: repo.html_url,
+    languages_url: repo.languages_url,
+  }));
+
+  const fetchLanguages: Repo[] = [];
+
+  for (const project of projectList) {
+    try {
+      const response = await fetch(project.languages_url);
+      const languages = await response.json();
+
+      const totalBytes = Object.values(languages || {}).reduce(
+        (sum: number, value: unknown) => sum + (value as number),
+        0
+      );
+      const Repolanguages: Repo = {
+        ...project,
+        languages,
+        totalBytes,
+      };
+
+      fetchLanguages.push(Repolanguages);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  return fetchLanguages;
+}
 
 function MinMode(): JSX.Element {
   const { isLoading, error, data } = useQuery<Repo[]>({
     queryKey: ["repoData"],
-    queryFn: () =>
-      fetch(`https://api.github.com/users/${github}/repos`)
-        .then((response) => response.json())
-        .then((data) => {
-          const projectList: Repo[] = data
-            .filter((repo: Repo) => !repo.private)
-            .map((repo: Repo) => ({
-              name: repo.name,
-              description: repo.description,
-              stars: repo.stargazers_count,
-              forks: repo.forks,
-              image: `https://opengraph.githubassets.com/HASH/${repo.owner.login}/${repo.name}`,
-              html_url: repo.html_url,
-              languages_url: repo.languages_url,
-            }));
-
-          const fetchLanguages = projectList.map((project: Repo) => {
-            return fetch(project.languages_url)
-              .then((response) => response.json())
-              .then((languages) => {
-                const totalBytes = Object.values(languages || {}).reduce(
-                  (sum: number, value: unknown) => sum + (value as number),
-                  0
-                );
-                return {
-                  ...project,
-                  languages,
-                  totalBytes,
-                };
-              });
-          });
-          return Promise.all(fetchLanguages);
-        })
-        .catch((error) => {
-          console.log("Error fetching GitHub projects:", error);
-          throw new Error("Error fetching GitHub projects");
-        }),
+    queryFn: fetchRepoData,
   });
 
   if (isLoading)
@@ -146,16 +143,14 @@ function MinMode(): JSX.Element {
 export function ProjectList(): JSX.Element {
   if (!github) return <></>;
   return (
-    <QueryClientProvider client={queryClient}>
-      <section id="projects" className="my-20">
-        <div className="text-center mb-10 before:block before:w-24 before:h-3 before:mb-5 before:rounded-md before:mx-auto before:bg-[#458588]">
-          <h3 className="text-3xl font-semibold">📁 Projects</h3>
-          <span className="text-sm font-bold tracking-wider uppercase dark:text-gray-400">
-            From GitHub
-          </span>
-        </div>
-        <MinMode />
-      </section>
-    </QueryClientProvider>
+    <section id="projects" className="my-20">
+      <div className="text-center mb-10 before:block before:w-24 before:h-3 before:mb-5 before:rounded-md before:mx-auto before:bg-[#458588]">
+        <h3 className="text-3xl font-semibold">📁 Projects</h3>
+        <span className="text-sm font-bold tracking-wider uppercase dark:text-gray-400">
+          From GitHub
+        </span>
+      </div>
+      <MinMode />
+    </section>
   );
 }
