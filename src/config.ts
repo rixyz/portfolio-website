@@ -9,6 +9,32 @@ import {
   Work,
 } from "./Type";
 
+const user: User = {
+  name: "John Doe",
+  github: "username",
+  image: "https://example.com/profile-image.png",
+  title: "Frontend Developer",
+  resumeLink: "https://example.com/resume.pdf",
+  about:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo odio ut turpis condimentum, vitae pulvinar massa consequat.",
+};
+
+const educations: Education[] = [
+  {
+    school: "University of ABC",
+    degree: "Bachelor of Science",
+    graduation: "2012 - 2016",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    school: "XYZ College",
+    degree: "High School Diploma",
+    graduation: "2008 - 2012",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+];
+
+
 const experiences: Experience[] = [
   {
     company: "ABC Company",
@@ -23,21 +49,6 @@ const experiences: Experience[] = [
     years: "2016 - 2018",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     toolsUsed: ["Adobe Photoshop", "Adobe Illustrator", "Figma"],
-  },
-];
-
-const educations: Education[] = [
-  {
-    school: "University of ABC",
-    degree: "Bachelor of Science",
-    graduation: "2012 - 2016",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  },
-  {
-    school: "XYZ College",
-    degree: "High School Diploma",
-    graduation: "2008 - 2012",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   },
 ];
 
@@ -69,6 +80,12 @@ const socials: Social[] = [
   },
 ];
 
+const contact: Contact = {
+  email: "example@example.com",
+  address: "123 Street, City, Country",
+  phone: "+1234567890",
+};
+
 const skills: Skill[] = [
   {
     skillName: "HTML",
@@ -91,22 +108,6 @@ const skills: Skill[] = [
     icon: "fab fa-node",
   },
 ];
-
-const contact: Contact = {
-  email: "example@example.com",
-  address: "123 Street, City, Country",
-  phone: "+1234567890",
-};
-
-const user: User = {
-  name: "John Doe",
-  github: "username",
-  image: "https://example.com/profile-image.png",
-  title: "Frontend Developer",
-  resumeLink: "https://example.com/resume.pdf",
-  about:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo odio ut turpis condimentum, vitae pulvinar massa consequat.",
-};
 
 const otherWorks: Work[] = [
   {
