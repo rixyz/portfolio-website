@@ -1,0 +1,275 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot,
+    top=1.5cm,
+    bottom=1.5cm,
+    left=1.5cm,
+    right=1.5cm,
+    footskip=0.7cm,
+]{geometry}
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={CV},
+    pdfauthor={Your Name},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref}
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+        \fontsize{20 pt}{20 pt}\selectfont Your Name
+
+        \vspace{3 pt}
+
+        \normalsize
+        \mbox{Your City, Country}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{mailto:you@example.com}{you@example.com}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{tel:+1-234-567-8900}{+1-234-567-8900}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/your-handle}{linkedin.com/in/your-handle}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://github.com/octocat}{github.com/octocat}}%
+    \end{header}
+
+    \vspace{5 pt - 0.3 cm}
+
+\hrulefill
+
+\begin{onecolentry}
+    \textbf{Summary-} A short professional summary. Describe who you are, your focus areas, and the kind of impact you make. Replace this with your own.
+\end{onecolentry}
+
+
+\section{Skills}
+
+\begin{onecolentry}
+    \textbf{Languages:} Python, JavaScript, TypeScript, Java, HTML, CSS
+\end{onecolentry}
+
+\vspace{0.1 cm}
+
+\begin{onecolentry}
+    \textbf{Frameworks \& Libraries:} Django, FastAPI, ReactJS, NodeJS
+\end{onecolentry}
+
+\vspace{0.1 cm}
+
+\begin{onecolentry}
+    \textbf{Tools \& Technologies:} Linux, Git, PostgreSQL, MongoDB, AWS, Docker
+\end{onecolentry}
+
+
+\section{Work Experience}
+
+
+\begin{twocolentry}{
+    Jan. 2024 – Present
+}
+    \textbf{Software Engineer}, Acme Corp, City
+\end{twocolentry}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Describe a key responsibility or achievement, including the tech you used and the outcome.
+        \item Quantify impact where you can (e.g. "reduced load time by 40\%").
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+    Jun. 2022 – Dec. 2023
+}
+    \textbf{Full-Stack Developer}, Startup Inc, City
+\end{twocolentry}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Built and shipped features across the stack.
+        \item Designed REST APIs and integrated third-party services.
+    \end{highlights}
+\end{onecolentry}
+
+
+\section{Education}
+
+\begin{onecolentry}
+    \textbf{Your University}, Bachelor of Science in Computer Science
+\end{onecolentry}
+
+\vspace{0.1 cm}
+
+\begin{onecolentry}
+    \textbf{Your High School}, A Levels
+\end{onecolentry}
+
+
+\section{Personal Projects}
+
+\begin{onecolentry}
+     \textbf{Project One} – \textit{\href{https://github.com/octocat}{Repo}}
+\end{onecolentry}
+\begin{onecolentry}
+    \begin{highlights}
+        \item One or two lines on what the project does and the stack it uses.
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{onecolentry}
+    \textbf{\href{https://github.com/octocat}{Project Two (github.com/you/project-two)}}
+\end{onecolentry}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Describe the project, the problem it solves, and your role.
+    \end{highlights}
+\end{onecolentry}
+
+
+\section{Volunteering and Related Experience}
+
+\begin{onecolentry}
+    \textbf{Volunteer Role}, Some Community / Club
+\end{onecolentry}
+\begin{highlights}
+\item Describe what you did and the impact you had.
+\end{highlights}
+
+
+\end{document}

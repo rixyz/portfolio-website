@@ -1,0 +1,8 @@
+{
+  // Tailwind CSS v4 uses custom at-rules (@import "tailwindcss", @theme, @apply,
+  // @utility, etc.) that the built-in CSS language server doesn't recognize.
+  // Silence the "Unknown at rule" warnings; the build understands them fine.
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore"
+}

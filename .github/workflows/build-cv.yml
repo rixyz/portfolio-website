@@ -1,0 +1,37 @@
+name: Build CV
+
+# Compiles CV.tex into public/CV.pdf whenever CV.tex changes, then commits the
+# PDF back so Vercel serves it at /CV.pdf (the "View CV" button points there).
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "CV.tex"
+      - ".github/workflows/build-cv.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-cv:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile CV.tex
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: CV.tex
+
+      - name: Move PDF into public/
+        run: |
+          mkdir -p public
+          mv CV.pdf public/CV.pdf
+
+      - name: Commit CV.pdf
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: rebuild CV.pdf [skip ci]"
+          file_pattern: public/CV.pdf
