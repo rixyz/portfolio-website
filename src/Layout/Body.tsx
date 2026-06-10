@@ -6,12 +6,13 @@ import { ProjectList } from "../Components/Projects";
 import { ExtraProjects } from "../Components/ExtraProjects";
 import { user } from "../config";
 import { Volunteering } from "../Components/Volunteering";
+import { Footer } from "../Components/Footer";
 
 function StringToJSX({ htmlString }: { htmlString: string }) {
   return (
     <div
       dangerouslySetInnerHTML={{ __html: htmlString }}
-      className="text-justify whitespace-pre-line"
+      className="text-left whitespace-pre-line"
     />
   );
 }
@@ -23,7 +24,7 @@ export function Body() {
         <h1 className="text-3xl text-emerald-500 font-bold">Portfolio</h1>
         <div className="text-white md:flex hidden justify-between bg-[#383839] rounded-bl-xl rounded-tr-xl border border-[#666666]">
           {[
-            ["About", "#about"],
+            ["Experience", "#experience"],
             ["Education", "#education"],
             ["Projects", "#projects"],
           ].map(([title, url]) => (
@@ -39,7 +40,9 @@ export function Body() {
       </div>
       <div>
         <section id="about" className="my-5">
-          <h2 className="text-3xl font-semibold">🧑 About Me</h2>
+          <h2 className="text-3xl font-semibold">
+            <span aria-hidden="true">🧑 </span>About Me
+          </h2>
           <StringToJSX htmlString={user.about} />
         </section>
         <Skills />
@@ -50,6 +53,7 @@ export function Body() {
         <Volunteering />
         <ExtraProjects />
       </div>
+      <Footer />
     </main>
   );
 }

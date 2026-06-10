@@ -9,10 +9,14 @@ export function Work() {
       <div className="container max-w-5xl md:pl-4">
         <div className="grid gap-4 sm:grid-cols-12">
           <div className="col-span-12 sm:col-span-3">
-            <SectionHeading title="💼 Experience" barColor="before:bg-[#b8bb26]" />
+            <SectionHeading
+              title="Experience"
+              icon="💼"
+              barColor="before:bg-[#b8bb26]"
+            />
           </div>
           <div className="col-span-12 md:pl-4 sm:col-span-9">
-            <div className="col-span-12 relative md:pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:dark:bg-gray-700">
+            <div className="col-span-12 relative md:pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-700">
               {experiences.map((exp, index, array) => {
                 const isNewCompany =
                   index === 0 || exp.company !== array[index - 1]?.company;
@@ -29,7 +33,7 @@ export function Work() {
                           ? "sm:before:w-4 sm:before:h-4"
                           : "sm:before:w-4 sm:before:h-2"
                       }
-                      sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:dark:bg-[#b8bb26]`}
+                      sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-[#b8bb26]`}
                   >
                     <div className="">
                       {isNewCompany && exp.company && (

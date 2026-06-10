@@ -12,7 +12,8 @@ export function Awards() {
         <div className="grid gap-4 sm:grid-cols-12">
           <div className="col-span-12 sm:col-span-3">
             <SectionHeading
-              title="🏆 Awards and Certification"
+              title="Awards and Certification"
+              icon="🏆"
               barColor="before:bg-[#fabd2f]"
             />
           </div>
@@ -28,9 +29,11 @@ export function Awards() {
                       <time className="row-start-1 mb-1 md:col-start-1 xl:col-span-2 dark:text-gray-400">
                         {award.date}
                       </time>
-                      <p className="ml-8 md:col-start-2 md:col-span-4 xl:col-start-3 xl:col-span-9 md:ml-0 dark:text-gray-300">
-                        {award.description}
-                      </p>
+                      {award.description && (
+                        <p className="ml-8 md:col-start-2 md:col-span-4 xl:col-start-3 xl:col-span-9 md:ml-0 dark:text-gray-300">
+                          {award.description}
+                        </p>
+                      )}
                     </>
                   );
                   return (

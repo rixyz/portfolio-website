@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { user, socials, contact } from "../config";
 
 function ContactInfo() {
@@ -41,7 +41,7 @@ function ContactItem({
     <div className="flex items-start w-full">
       <div className="h-10 w-10 shrink-0 mr-3">
         <div className="rounded-lg p-2 text-[#ffdb70] bg-zinc-800 h-full w-full flex items-center justify-center drop-shadow-lg">
-          <i className={`fas ${icon}`}></i>
+          <i className={`fas ${icon}`} aria-hidden="true"></i>
         </div>
       </div>
       <div className="grow min-w-0">
@@ -61,37 +61,52 @@ function ContactItem({
 function SocialInfo() {
   return (
     <div className="p-2 flex flex-row justify-center">
-      {socials.map((social, index) => (
+      {socials.map((social) => (
         <a
-          key={index}
+          key={social.name}
           href={social.url}
+          aria-label={social.name}
           className="px-3 py-2 text-xl"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i className={`fab fa-${social.name}`}></i>
+          <i className={`fab fa-${social.name}`} aria-hidden="true"></i>
         </a>
       ))}
     </div>
   );
 }
 
-function CVModal({
-  show,
-  onClose,
-}: {
-  show: boolean;
-  onClose: () => void;
-}) {
+function CVModal({ show, onClose }: { show: boolean; onClose: () => void }) {
+  useEffect(() => {
+    if (!show) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [show, onClose]);
+
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-      <div className="bg-[#1d2021] rounded-xl shadow-xl w-full max-w-3xl h-full overflow-hidden flex flex-col">
+    <div
+      className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Resume preview"
+        className="bg-[#1d2021] rounded-xl shadow-xl w-full max-w-3xl h-full overflow-hidden flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-center p-4 border-b border-zinc-700">
           <h2 className="text-lg font-semibold">Resume Preview</h2>
           <button
             onClick={onClose}
+            autoFocus
+            aria-label="Close resume preview"
             className="cursor-pointer text-gray-300 hover:text-white"
           >
             ✕
@@ -129,7 +144,7 @@ export function Navbar() {
       <div className="bg-zinc-900 flex flex-col items-center lg:fixed m-5 text-white rounded-3xl border border-zinc-800 lg:w-4/5 w-full max-w-xs">
         <img
           src={user.avatar}
-          alt="profile"
+          alt={user.name}
           className="p-5 pt-10 rounded-3xl"
         />
         <div className="font-semibold text-2xl py-1 underline">{user.name}</div>

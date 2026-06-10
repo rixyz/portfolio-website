@@ -8,7 +8,8 @@ export function ExtraProjects() {
   return (
     <section id="extraProjects" className="my-20">
       <SectionHeading
-        title="📁 Extra Projects"
+        title="Extra Projects"
+        icon="📁"
         subtitle="Mostly Designs"
         barColor="before:bg-[#83a598]"
         variant="center"

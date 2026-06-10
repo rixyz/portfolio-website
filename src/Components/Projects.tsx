@@ -18,38 +18,29 @@ function getCachedData(): Project[] | null {
   }
 }
 
-async function fetchLanguages(url: string): Promise<Record<string, number>> {
-  const res = await fetch(url);
-  return res.ok ? res.json() : {};
-}
-
 async function fetchRepoData(): Promise<Project[]> {
   try {
     const res = await fetch(
-      `https://api.github.com/users/${github}/repos?sort=updated`
+      `https://api.github.com/users/${github}/repos?sort=updated&per_page=100`
     );
     if (!res.ok) {
       throw new Error(`GitHub API responded with ${res.status}`);
     }
 
     const repos: GithubRepo[] = await res.json();
-    const projects = await Promise.all(
-      repos
-        .filter((repo) => !ignoreProjects.includes(repo.name))
-        .map(
-          async (repo): Promise<Project> => ({
-            name: repo.name,
-            description: repo.description,
-            stars: repo.stargazers_count,
-            forks: repo.forks,
-            image: `https://opengraph.githubassets.com/${encodeURIComponent(
-              repo.pushed_at
-            )}/${repo.owner.login}/${repo.name}`,
-            html_url: repo.html_url,
-            languages: await fetchLanguages(repo.languages_url),
-          })
-        )
-    );
+    const projects: Project[] = repos
+      .filter((repo) => !ignoreProjects.includes(repo.name))
+      .map((repo) => ({
+        name: repo.name,
+        description: repo.description,
+        stars: repo.stargazers_count,
+        forks: repo.forks,
+        image: `https://opengraph.githubassets.com/${encodeURIComponent(
+          repo.pushed_at
+        )}/${repo.owner.login}/${repo.name}`,
+        html_url: repo.html_url,
+        language: repo.language,
+      }));
 
     localStorage.setItem(CACHE_KEY, JSON.stringify(projects));
     return projects;
@@ -123,12 +114,7 @@ function ProjectGrid() {
           </a>
           <p className="text-sm text-center mb-2">{project.description}</p>
           <div className="text-sm mt-2">
-            {Object.entries(project.languages)
-              .sort((a, b) => b[1] - a[1])
-              .slice(0, 5)
-              .map(([language]) => (
-                <Tag key={language}>{language}</Tag>
-              ))}
+            {project.language && <Tag>{project.language}</Tag>}
           </div>
           <div className="flex justify-end w-full mt-auto pt-1">
             <span className="text-sm text-gray-500 mr-2">
@@ -149,7 +135,8 @@ export function ProjectList() {
   return (
     <section id="projects" className="my-20">
       <SectionHeading
-        title="📁 Projects"
+        title="Projects"
+        icon="📁"
         subtitle="From GitHub"
         barColor="before:bg-[#458588]"
         variant="center"

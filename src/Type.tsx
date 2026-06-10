@@ -56,7 +56,7 @@ interface GithubRepo {
   forks: number;
   html_url: string;
   owner: { login: string };
-  languages_url: string;
+  language: string | null;
   pushed_at: string;
 }
 
@@ -67,7 +67,7 @@ interface Project {
   forks: number;
   image: string;
   html_url: string;
-  languages: Record<string, number>;
+  language: string | null;
 }
 
 interface ExtraProjectProps {

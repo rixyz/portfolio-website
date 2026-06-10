@@ -10,7 +10,8 @@ export function Volunteering() {
         <div className="grid gap-4 sm:grid-cols-12">
           <div className="col-span-12 sm:col-span-3">
             <SectionHeading
-              title="💼 Volunteering Experience"
+              title="Volunteering Experience"
+              icon="💼"
               barColor="before:bg-[#b16286]"
             />
           </div>
