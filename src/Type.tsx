@@ -85,7 +85,14 @@ interface VolunteeringProps {
   points: string[];
 }
 
+interface ProjectFilterProps {
+  limit?: number;
+  ignore?: string[];
+  only?: string[];
+}
+
 export type {
+  ProjectFilterProps,
   VolunteeringProps,
   ExtraProjectProps,
   GithubRepo,

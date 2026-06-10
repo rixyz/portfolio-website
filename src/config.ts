@@ -8,6 +8,7 @@ import {
   SkillProps,
   ExtraProjectProps,
   VolunteeringProps,
+  ProjectFilterProps,
 } from "./Type";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -127,8 +128,12 @@ const user: UserProps = {
     "Currently working as a <span class='text-emerald-500'>Software Engineer</span>.",
 };
 
-// Repos to hide from the auto-generated Projects section (by name).
-const ignoreProjects: string[] = [];
+// Filter for the auto-generated Projects (fetched from your GitHub repos).
+const projectFilter: ProjectFilterProps = {
+  limit: 6, // show only this many (0 = show all)
+  ignore: [], // hide these repos by name
+  only: [], // show ONLY these repos (in order); leave empty to use blacklist style
+};
 
 // Extra Projects (anything not on GitHub — designs, hardware, etc.)
 const extraProjects: ExtraProjectProps[] = [
@@ -160,5 +165,5 @@ export {
   socials,
   skills,
   user,
-  ignoreProjects,
+  projectFilter,
 };

@@ -8,6 +8,7 @@ import {
   SkillProps,
   ExtraProjectProps,
   VolunteeringProps,
+  ProjectFilterProps,
 } from "./Type";
 
 const experiences: WorkProps[] = [
@@ -109,8 +110,17 @@ const user: UserProps = {
     "Currently working as a <span class='text-emerald-500'>Developer</span>.",
 };
 
-// Repo names to HIDE from the auto-generated Projects section.
-const ignoreProjects: string[] = ["dotfiles", "my-config-repo"];
+// -----------------------------------------------------------------------------
+// Projects filter — controls which auto-fetched GitHub repos are shown.
+//   Blacklist style: show all your repos except `ignore`, capped at `limit`.
+//   Whitelist style: set `only` to show ONLY those repos (in order). A non-empty
+//   `only` overrides both `limit` and `ignore`.
+// -----------------------------------------------------------------------------
+const projectFilter: ProjectFilterProps = {
+  limit: 6, // max projects to show (0 = no limit)
+  ignore: ["dotfiles", "my-config-repo"], // hide these repos by name
+  only: [], // e.g. ["my-best-project", "another-repo"] to show ONLY these
+};
 
 // Extra projects — anything NOT on GitHub (designs, hardware, writing…).
 const extraProjects: ExtraProjectProps[] = [
@@ -150,5 +160,5 @@ export {
   socials,
   skills,
   user,
-  ignoreProjects,
+  projectFilter,
 };

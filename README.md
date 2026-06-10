@@ -41,7 +41,7 @@ Other scripts: `bun run build` (production build → `dist/`), `bun run preview`
 
 1. **`src/config.ts`** — all your content: name, title, socials, contact, skills, experience, education, awards, volunteering and extra projects. See **[`src/config.ts.example`](src/config.ts.example)** for a fully-commented reference of every field.
    - Set `user.github` to your GitHub username — the **Projects** section auto-fetches your public repos.
-   - Add repo names to `ignoreProjects` to hide any.
+   - Use `projectFilter` to control the Projects list — `limit` (max shown), `ignore` (hide repos), or `only` (whitelist: show only these).
    - In experience, `duration` is optional; set `end: "Present"` to highlight your current role.
 2. **`CV.tex`** — your résumé (compiled to a PDF automatically. Prefer a ready-made PDF? Skip LaTeX and drop your own `public/CV.pdf` instead.
 3. **`index.html`** *(optional)* — the page `<title>` and the social / Open-Graph meta tags (name, description, preview image).

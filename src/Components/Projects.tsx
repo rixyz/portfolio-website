@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { GithubRepo, Project } from "../Type";
-import { user, ignoreProjects } from "../config";
+import { user, projectFilter } from "../config";
 import { SectionHeading } from "./SectionHeading";
 import { Tag } from "./Tag";
 import { ProjectImage } from "./ProjectImage";
@@ -18,6 +18,17 @@ function getCachedData(): Project[] | null {
   }
 }
 
+function selectRepos(repos: GithubRepo[]): GithubRepo[] {
+  const { limit, ignore = [], only = [] } = projectFilter;
+  if (only.length > 0) {
+    return only
+      .map((name: string) => repos.find((repo) => repo.name === name))
+      .filter((repo): repo is GithubRepo => Boolean(repo));
+  }
+  const selected = repos.filter((repo) => !ignore.includes(repo.name));
+  return limit && limit > 0 ? selected.slice(0, limit) : selected;
+}
+
 async function fetchRepoData(): Promise<Project[]> {
   try {
     const res = await fetch(
@@ -28,9 +39,7 @@ async function fetchRepoData(): Promise<Project[]> {
     }
 
     const repos: GithubRepo[] = await res.json();
-    const projects: Project[] = repos
-      .filter((repo) => !ignoreProjects.includes(repo.name))
-      .map((repo) => ({
+    const projects: Project[] = selectRepos(repos).map((repo) => ({
         name: repo.name,
         description: repo.description,
         stars: repo.stargazers_count,
