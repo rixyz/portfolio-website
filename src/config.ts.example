@@ -1,0 +1,154 @@
+import {
+  UserProps,
+  EducationProps,
+  WorkProps,
+  AwardProps,
+  SocialProps,
+  ContactProps,
+  SkillProps,
+  ExtraProjectProps,
+  VolunteeringProps,
+} from "./Type";
+
+const experiences: WorkProps[] = [
+  {
+    company: "ABC Company",
+    title: "Frontend Developer",
+    duration: { start: "2018", end: "Present" },
+    description: [
+      "Describe what you built, the stack, and the impact.",
+      "Add as many bullet points as you like.",
+    ],
+    toolsUsed: ["HTML", "CSS", "JavaScript", "React"],
+  },
+  {
+    company: "XYZ Agency",
+    title: "UI/UX Designer",
+    duration: { start: "2016", end: "2018" },
+    description: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit."],
+    toolsUsed: ["Adobe Photoshop", "Adobe Illustrator", "Figma"],
+  },
+];
+
+const educations: EducationProps[] = [
+  {
+    school: "University of ABC",
+    degree: "Bachelor of Science",
+    graduation: "2012 - 2016",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    school: "XYZ College",
+    degree: "High School Diploma",
+    graduation: "2008 - 2012",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+];
+
+const awards: AwardProps[] = [
+  {
+    name: "Best Web Design",
+    issuedBy: "ABC Organization",
+    date: "2019",
+    url: "#",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    name: "Outstanding Achievement",
+    issuedBy: "XYZ Association",
+    date: "2017",
+    url: "",
+    description: "",
+  },
+];
+
+// -----------------------------------------------------------------------------
+// Social links. `name` is used BOTH for the icon (Font Awesome brand:
+// `fab fa-<name>`) and the accessible label, so use known brand slugs:
+// "github", "linkedin", "twitter", "instagram", ...
+// -----------------------------------------------------------------------------
+const socials: SocialProps[] = [
+  { name: "github", url: "https://github.com/username" },
+  { name: "linkedin", url: "https://www.linkedin.com/in/username" },
+];
+
+// Skills grid. `icon` is a Font Awesome class string (loaded via CDN in
+// index.html): "fab fa-react" (brand), "fas fa-database" (solid), etc.
+// Browse icons at https://fontawesome.com/icons
+const skills: SkillProps[] = [
+  { name: "HTML", icon: "fab fa-html5" },
+  { name: "CSS", icon: "fab fa-css3-alt" },
+  { name: "JavaScript", icon: "fab fa-js" },
+  { name: "React", icon: "fab fa-react" },
+  { name: "Node.js", icon: "fab fa-node" },
+];
+
+const contact: ContactProps = {
+  email: "example@example.com",
+  address: "123 Street, City, Country",
+  phone: "+1234567890",
+};
+
+// Your profile (sidebar + page metadata).
+// • github: your GitHub username — this DRIVES the auto-generated Projects
+//   section (it fetches your public repos).
+// • avatar: any image URL. 
+// • resumeLink: "/CV.pdf" uses the LaTeX→PDF build (see README). Can also be
+//   any external URL.
+// • about: supports "\n" line breaks and a little inline HTML, e.g.
+//   "<span class='text-emerald-500'>highlighted text</span>".
+const user: UserProps = {
+  name: "John Doe",
+  github: "username",
+  avatar: "https://github.com/username.png",
+  title: "Frontend Developer",
+  resumeLink: "/CV.pdf",
+  about:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+    "Sed commodo odio ut turpis condimentum.\n" +
+    "Currently working as a <span class='text-emerald-500'>Developer</span>.",
+};
+
+// Repo names to HIDE from the auto-generated Projects section.
+const ignoreProjects: string[] = ["dotfiles", "my-config-repo"];
+
+// Extra projects — anything NOT on GitHub (designs, hardware, writing…).
+const extraProjects: ExtraProjectProps[] = [
+  {
+    name: "Project XYZ",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    url: "#",
+    imageUrl: "",
+    toolsUsed: ["HTML", "CSS", "JavaScript", "React"],
+    type: "Web Development",
+  },
+  {
+    name: "Design Project",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    url: "#",
+    imageUrl: "",
+    toolsUsed: ["Adobe Photoshop", "Figma"],
+    type: "Design",
+  },
+];
+
+const volunteering: VolunteeringProps[] = [
+  {
+    title: "Volunteer Role",
+    organization: "Some Community / Club",
+    points: ["Describe what you did and the impact you had."],
+  },
+];
+
+export {
+  volunteering,
+  extraProjects,
+  contact,
+  experiences,
+  educations,
+  awards,
+  socials,
+  skills,
+  user,
+  ignoreProjects,
+};
